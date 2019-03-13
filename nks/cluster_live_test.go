@@ -206,6 +206,7 @@ func testClusterCreateAWS(t *testing.T) {
 	cluster, err := c.CreateCluster(orgID, testAwsCluster)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	c.WaitClusterRunning(orgID, cluster.ID, true, timeout)
@@ -244,6 +245,7 @@ func testClusterCreateEKS(t *testing.T) {
 	cluster, err := c.CreateCluster(orgID, testEKSCluster)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	c.WaitClusterRunning(orgID, cluster.ID, true, timeout)
@@ -282,6 +284,7 @@ func testClusterCreateAzure(t *testing.T) {
 	cluster, err := c.CreateCluster(orgID, testAzureCluster)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	c.WaitClusterRunning(orgID, cluster.ID, true, timeout)
@@ -320,6 +323,7 @@ func testClusterCreateAKS(t *testing.T) {
 	cluster, err := c.CreateCluster(orgID, testAKSCluster)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	c.WaitClusterRunning(orgID, cluster.ID, true, timeout)
@@ -358,6 +362,7 @@ func testClusterCreateGCE(t *testing.T) {
 	cluster, err := c.CreateCluster(orgID, testGCECluster)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	c.WaitClusterRunning(orgID, cluster.ID, true, timeout)
@@ -396,6 +401,7 @@ func testClusterCreateGKE(t *testing.T) {
 	cluster, err := c.CreateCluster(orgID, testGKECluster)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	c.WaitClusterRunning(orgID, cluster.ID, true, timeout)
