@@ -91,7 +91,7 @@ func (c *APIClient) runRequest(req *APIReq) error {
 	// Check Status Code versus what the caller wanted, error if not correct
 	if req.WantedStatus != resp.StatusCode {
 		body, _ := ioutil.ReadAll(resp.Body)
-		err = fmt.Errorf("Incorrect status code returned: %d, Status: %s\n%s", resp.StatusCode, resp.Status, string(body))
+		err = fmt.Errorf("Incorrect status returned: %s\n%s", resp.Status, string(body))
 		return err
 	}
 
