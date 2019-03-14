@@ -168,14 +168,16 @@ func TestLiveBasicCluster(t *testing.T) {
 		t.Run("gke", testClusterCreateGKE)
 	})
 
-	t.Run("get clusters", func(t *testing.T) {
-		t.Run("list", testClusterList)
-		t.Run("get", testClusterGet)
-	})
+        if len(clusterIds) > 0 {
+		t.Run("get clusters", func(t *testing.T) {
+			t.Run("list", testClusterList)
+			t.Run("get", testClusterGet)
+		})
 
-	t.Run("delete clusters", func(t *testing.T) {
-		t.Run("delete", testClusterDelete)
-	})
+		t.Run("delete clusters", func(t *testing.T) {
+			t.Run("delete", testClusterDelete)
+		})
+	}
 }
 
 func testClusterCreateAWS(t *testing.T) {

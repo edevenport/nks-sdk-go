@@ -198,29 +198,32 @@ func convertVersionToInts(v string) (major, minor, patch int, err error) {
 }
 
 // WaitClusterRunning waits until cluster reaches the running state (configured as const above)
+// isProvisioning is deprecated and may be removed in a future major release
 func (c *APIClient) WaitClusterRunning(orgID, clusterID int, isProvisioning bool, timeout int) error {
 	for i := 1; i < timeout; i++ {
 		cl, err := c.GetCluster(orgID, clusterID)
 		if err != nil {
 			return err
 		}
+
 		// Check if state is running, return if it is
 		if cl.State == ClusterRunningStateString {
 			return nil
 		}
-		if isProvisioning {
-			// Pull build logs, check if provider build failed
-			bls, err := c.GetBuildLogs(orgID, clusterID)
-			if err == nil {
-				bl := c.GetBuildLogEventState(bls, ClusterBuildLogEventType)
-				if bl != nil && bl.EventState == ClusterBuildLogEventFailed {
-					return fmt.Errorf("Cluster build failed, build log message for event %s was: %s\n",
-						ClusterBuildLogEventType, bl.Message)
+
+		logs, err := c.GetBuildLogs(orgID, clusterID)
+		if err == nil {
+			for i, _ := range logs {
+				if logs[i].EventState == ClusterBuildLogEventFailed {
+					return fmt.Errorf("Cluster build failed: %s\n",
+						logs[i].Message)
+
 				}
 			}
-			if cl.IsFailed {
-				return fmt.Errorf("Cluster build failed, is_failed: %t\n", cl.IsFailed)
-			}
+		}
+
+		if cl.IsFailed {
+			return fmt.Errorf("Cluster build failed, is_failed: %t\n", cl.IsFailed)
 		}
 		time.Sleep(time.Second)
 	}
