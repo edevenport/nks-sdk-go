@@ -3,15 +3,14 @@ pipeline {
     label "jenkins-go"
   }
 
-  tools  {
-    go  'go1.11'
-  }
+  // tools  {
+  //   go  'go1.11'
+  // }
 
   environment {
-    NKS_API_TOKEN = credentials('nks_api_token')
-
     ORG            = 'edevenport'
     APP_NAME       = 'nks-sdk-go'
+    NKS_API_TOKEN  = credentials('nks_api_token')
     NKS_API_URL    = 'https://api-staging.stackpoint.io/'
     NKS_SSH_KEYSET = 3750
     NKS_AWS_KEYSET = 3751
