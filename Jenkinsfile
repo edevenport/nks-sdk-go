@@ -3,9 +3,9 @@ pipeline {
     label "jenkins-go"
   }
 
-  // tools  {
-  //   go  'go1.11'
-  // }
+  triggers {
+    cron('H 0 * * *')
+  }
 
   environment {
     ORG            = 'edevenport'
@@ -30,11 +30,14 @@ pipeline {
       }
       steps {
         container('go') {
-          dir('/home/jenkins/go/src/github.com/edevenport/nks-sdk-go') {
+          dir('/home/jenkins/go/src/github.com/edevenport/nks-sdk-go/nks') {
             checkout scm
             sh "go version"
             sh "go mod vendor"
-            sh "go test -v -timeout=120m -run=TestLiveBasicClient nks/*.go"
+	    // sh "go get github.com/golang/lint/golint"
+	    sh "golint"
+	    // sh "go vet"
+            sh "go test -v -timeout=120m -run=TestLiveBasicClient"
           }
         }
       }
