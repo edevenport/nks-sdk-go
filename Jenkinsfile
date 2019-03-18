@@ -29,10 +29,7 @@ pipeline {
           dir('/home/jenkins/go/src/github.com/edevenport/nks-sdk-go') {
             checkout scm
             sh "go version"
-            sh "go test -v -timeout=120m -run=TestLiveBasicClient"
-            // sh "make linux"
-            // sh "export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml"
-            // sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
+            sh "go test -v -timeout=120m -run=TestLiveBasicClient nks/*.go"
           }
         }
       }
