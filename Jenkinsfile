@@ -10,6 +10,7 @@ pipeline {
   environment {
     ORG            = 'edevenport'
     APP_NAME       = 'nks-sdk-go'
+    GO111MODULE    = 'on'
     NKS_API_TOKEN  = credentials('nks_api_token')
     NKS_API_URL    = 'https://api-staging.stackpoint.io/'
     NKS_SSH_KEYSET = 3750
@@ -32,6 +33,7 @@ pipeline {
           dir('/home/jenkins/go/src/github.com/edevenport/nks-sdk-go') {
             checkout scm
             sh "go version"
+            sh "go mod vendor"
             sh "go test -v -timeout=120m -run=TestLiveBasicClient nks/*.go"
           }
         }
