@@ -3,6 +3,10 @@ pipeline {
     label "jenkins-go"
   }
 
+  tools  {
+    go  'go1.11'
+  }
+
   environment {
     NKS_API_TOKEN = credentials('nks_api_token')
 
